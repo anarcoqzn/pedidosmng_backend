@@ -3,7 +3,10 @@
 
 # Getting Started:
 On terminal, open this folder and then run 
-
+  
+  First of all, run
+  `npm install` to install dependencies.
+  
  * On production:
   `npm start`
  * On development:
