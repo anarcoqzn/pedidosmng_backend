@@ -1,6 +1,4 @@
-const Image = require('../models/Image');
 const Product = require('../models/Product');
-const mongoose = require('mongoose');
 
 module.exports = {
   async create(req,res){
@@ -39,11 +37,6 @@ module.exports = {
     if( req.params.id ) product = await Product.findById(req.params.id);
     if( product ) {
       await product.remove();
-      for (let i = 0; i < product.images.length; i++){
-        const temp_img = await Image.findById(mongoose.Types.ObjectId(product.images[i]));
-        await temp_img.remove();
-      }
-
       return res.send();
     }else{
       return res.status(404).send("Produto não encontrado.")

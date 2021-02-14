@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Event = require('./Event');
+const Image = require('./Image');
 const ProductSchema = new mongoose.Schema({
   name:{
     type: String,
@@ -30,13 +31,30 @@ const ProductSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref:'Image'
-  }]
+  }],
+  owner:{
+    type: mongoose.Schema.Types.ObjectId,
+    required:false,
+    ref: 'User'
+  },
+  category:{
+    type: String,
+  },
+  rating:{
+    type: Number,
+    max: 5,
+    min: 0,
+    default: 0
+  }
 });
 
-ProductSchema.pre('remove', function(){
-  Event.updateMany({products:this._id},
+ProductSchema.pre('remove', async function(){
+  await Event.updateMany({products:this._id},
               {$pull:{products:this._id}},
               {multi: true}).exec();
+
+  const images = await Image.find({reference: this._id});
+  images.forEach(async img => img.remove());
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

@@ -4,13 +4,13 @@ module.exports = {
   async uploadImage (req,res){
     
     const { originalname: name, size, key, location: url = "NoN"} = req.file;
-    const { product } = req.body;
+    const { reference } = req.body;
     const image = await Image.create({
       name,
       size,
       key,
       url,
-      product
+      reference
     })
 
     return res.json(image);

@@ -7,6 +7,7 @@ const EventController = require('./controllers/EventController');
 const ProductController = require('./controllers/ProductController');
 const OrderController = require('./controllers/OrderController');
 const ImageController = require('./controllers/ImageController');
+const UserController = require('./controllers/UserController');
 
 routes.get('/event', EventController.listAll);
 routes.get('/event/:id', EventController.getById);
@@ -28,5 +29,10 @@ routes.get('/image/:id', ImageController.getById);
 routes.post('/image', multerMiddleware, ImageController.uploadImage);
 routes.delete('/image/:id', ImageController.delete);
 routes.get('/image', ImageController.listAll);
+
+routes.get('/user', UserController.getUser);
+routes.post('/user', UserController.create);
+routes.put('/user', UserController.update);
+routes.delete('/user', UserController.delete);
 
 module.exports = routes;
