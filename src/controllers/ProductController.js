@@ -2,13 +2,14 @@ const Product = require('../models/Product');
 
 module.exports = {
   async create(req,res){
-    const { name, value, description, quantity, images } = req.body;
+    const { name, value, description, quantity, images, category } = req.body;
 
     const product = await Product.create({
       name,
       value:parseFloat(value), 
       description,
       quantity,
+      category,
       images
     });
 
@@ -48,5 +49,11 @@ module.exports = {
     
     if( product ) return res.json( await product.updateOne(req.body, {new: true}));
     else return res.status(404).send("Produto não encontrado.");   
+  },
+
+  async getCategories(req,res) {
+    const query = await Product.distinct('category');
+
+    return res.send(query);
   }
 }

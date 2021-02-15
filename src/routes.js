@@ -20,6 +20,7 @@ routes.get('/product/:id', ProductController.getById);
 routes.post('/product', ProductController.create);
 routes.delete('/product/:id', ProductController.delete);
 routes.put('/product/:id', ProductController.update);
+routes.get('/categories', ProductController.getCategories);
 
 routes.get('/order', OrderController.listAll);
 routes.post('/order', OrderController.create);
