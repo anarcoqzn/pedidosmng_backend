@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Event = require('./Event');
 const Image = require('./Image');
 const Product = require('./Product');
@@ -16,17 +17,20 @@ const UserSchema = new mongoose.Schema({
   },
   userName:{
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
-  address:{
+  address:[{
     street: {
       type: String,
       required: true
@@ -38,11 +42,12 @@ const UserSchema = new mongoose.Schema({
     complement:{
       type: String
     }
-  },
+  }],
   category:{
     type: String,
     required: true,
-    enum:["Client", "Admin"]
+    enum:["Client", "Admin"],
+    default:"Client"
   },
   rating:{
     type: Number,
@@ -60,7 +65,13 @@ UserSchema.pre('remove', async function(){
   Product.remove({owner:this._id});
   Event.remove({owner:this._id});
   const image = await Image.findOne({reference:this._id});
-  image.remove();
+  if (image) image.remove();
 });
+
+UserSchema.pre('save',async function(next){
+  const hash = await bcrypt.hash( this.password, 10);
+  this.password = hash;
+  next();
+})
 
 module.exports = mongoose.model('User', UserSchema);

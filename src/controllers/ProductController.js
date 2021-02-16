@@ -55,5 +55,9 @@ module.exports = {
     const query = await Product.distinct('category');
 
     return res.send(query);
+  },
+
+  async getByCategory(req, res){
+    return res.json(await Product.find({category:req.params.category}));
   }
 }

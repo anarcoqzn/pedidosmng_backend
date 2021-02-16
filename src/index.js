@@ -14,13 +14,16 @@ const app = express();
 
 mongoose.connect(process.env.MONGO_URL,{
   useNewUrlParser:true,
-  useUnifiedTopology:true
+  useUnifiedTopology:true,
+  useCreateIndex: true
 });
+
+mongoose.Promise = global.Promise;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(require('./routes'));
+app.use("/api",require('./routes'));
 app.use(morgan('dev'));
 app.use('/files', express.static(path.resolve(__dirname,'..','tmp','uploads')));
 
