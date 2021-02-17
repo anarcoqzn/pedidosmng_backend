@@ -3,6 +3,7 @@ const multer = require('multer');
 const multerConfig = require('./config/multer');
 const multerMiddleware = multer(multerConfig).single("file")
 const authMiddleware = require('./middlewares/auth');
+routes.use('/user', authMiddleware);
 
 const EventController = require('./controllers/EventController');
 const ProductController = require('./controllers/ProductController');
@@ -20,13 +21,14 @@ routes.get('/products/:category', ProductController.getByCategory);
 routes.get('/categories', ProductController.getCategories);
 // ----------
 
-routes.get('/user/event', authMiddleware, EventController.getEvents);
-routes.get('/user/event/:id', EventController.getById);
-routes.post("/user/event", EventController.create);
-routes.delete('/user/event/:id', EventController.delete);
-routes.put('/user/event/:id', EventController.update);
+// CONSERTAR ESTAS ROTAS
+routes.get('/user/event',  UserController.getEvents);
+routes.get('/user/event/:id',  EventController.getById);
+routes.post("/user/event",  EventController.create);
+routes.delete('/user/event/:id',  EventController.delete);
+routes.put('/user/event/:id',  EventController.update);
 
-routes.get('/user/product', ProductController.listAll);
+routes.get('/user/product', UserController.getProducts);
 routes.get('/user/product/:id', ProductController.getById);
 routes.post('/user/product', ProductController.create);
 routes.delete('/user/product/:id', ProductController.delete);
@@ -38,9 +40,8 @@ routes.delete('/user/order/:id', OrderController.delete);
 routes.post('/order', OrderController.create);
 
 routes.get('/image/:id', ImageController.getById);
-routes.post('/image', multerMiddleware, ImageController.uploadImage);
-routes.delete('/image/:id', ImageController.delete);
-routes.get('/image', ImageController.listAll);
+routes.post('/user/image', multerMiddleware, ImageController.uploadImage);
+routes.delete('/user/image/:id', ImageController.delete);
 
 routes.get('/user', UserController.getUser);
 routes.post('/register', authController.register);

@@ -1,27 +1,23 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authConfig = require('../config/auth.json');
 
 function generateToken(params={}){
-  return jwt.sign(params, authConfig.secret,{
+  return jwt.sign(params, process.env.JWT_SECRET,{
     expiresIn:86400, // expira em 1 dia
   });
 }
 
 module.exports = {
   async authenticate(req,res) {
-    const { email, userName, password } = req.body;
+    const { login, password } = req.body;
     
-    let user;
-    
-    if (email) user = await User.findOne({ email }).select('+password');
-    else user = await User.findOne({ userName }).select('+password');
+    const user = await User.findOne({ $or:[ {email:login},{userName:login} ] }).select('+password');
 
     if ( !user ) return res.status(400).send("Usuário não encontrado.");
 
     if( !await bcrypt.compare(password, user.password))
-      return res.status(400).send("Senha inválida.");
+      return res.status(401).send("Senha inválida.");
     
     user.password = undefined;
 

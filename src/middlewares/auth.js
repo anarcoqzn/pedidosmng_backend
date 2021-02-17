@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const authConfig = require('../config/auth.json');
+
 module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
   
@@ -11,9 +11,9 @@ module.exports = (req, res, next) => {
 
   const [ scheme, token ] = parts;
 
-  if( !/^Bearer$^/i.test(scheme) ) return res.status(401).send("Token mal formatado.")
+  if( !(/^Bearer$/i.test(scheme)) ) return res.status(401).send("Token mal formatado.")
 
-  jwt.verify(token, authConfig.secret, (err, decoded)=>{
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
     if (err) return res.status(401).send("Token inválido.");
 
     req.userId = decoded.id;

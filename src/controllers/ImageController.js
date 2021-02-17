@@ -30,10 +30,5 @@ module.exports = {
     
     if( t_image ) return res.json( await t_image.remove());
     else return res.status(404).send("Image not found.");
-  },
-
-  async listAll(req,res) {
-
-    return res.json( await Image.find());
   }
 }

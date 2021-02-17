@@ -1,3 +1,5 @@
+const Event = require('../models/Event');
+const Product = require('../models/Product');
 const User = require('../models/User');
 
 module.exports = {
@@ -17,5 +19,13 @@ module.exports = {
 
   async getUser(req,res){
     return res.send(await User.find().populate('imageProfile'));
+  },
+
+  async getEvents(req,res){
+    return res.send(await Event.find({createdBy: req.userId}));
+  },
+
+  async getProducts(req,res){
+    return res.send(await Product.find({createdBy: req.userId}));
   }
 };

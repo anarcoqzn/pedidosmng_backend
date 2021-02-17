@@ -32,7 +32,7 @@ module.exports = {
   },
 
   async listAll(req, res){
-    const orders = await Order.find();
+    const orders = await Order.find({addressedTo:req.userId});
     return res.json(orders);
   },
 
