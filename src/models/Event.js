@@ -45,7 +45,7 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  owner:{
+  createdBy:{
     type: mongoose.Schema.Types.ObjectId,
     required:false,
     ref: 'User'

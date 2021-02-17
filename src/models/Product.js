@@ -32,7 +32,7 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     ref:'Image'
   }],
-  owner:{
+  createdBy:{
     type: mongoose.Schema.Types.ObjectId,
     required:false,
     ref: 'User'
