@@ -27,5 +27,5 @@ app.use("/api",require('./routes'));
 app.use(morgan('dev'));
 app.use('/files', express.static(path.resolve(__dirname,'..','tmp','uploads')));
 
-console.log(`Listening at 3000`);
-app.listen(3000);
+console.log(`Listening at `+process.env.PORT);
+app.listen(process.env.PORT);
