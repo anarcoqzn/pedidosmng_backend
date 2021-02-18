@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Event = require('./Event');
 const Image = require('./Image');
+
 const ProductSchema = new mongoose.Schema({
   name:{
     type: String,
@@ -54,7 +55,7 @@ ProductSchema.pre('remove', async function(){
               {multi: true}).exec();
 
   const images = await Image.find({reference: this._id});
-  images.forEach(async img => img.remove());
+  images.forEach(async img => await img.remove());
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

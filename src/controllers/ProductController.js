@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 module.exports = {
   async create(req,res){
     const { name, value, description, quantity, images, category, createdBy } = req.body;
-
+    
     const product = await Product.create({
       name,
       value:parseFloat(value), 

@@ -1,7 +1,7 @@
 const routes = require('express').Router()
 const multer = require('multer');
 const multerConfig = require('./config/multer');
-const multerMiddleware = multer(multerConfig).single("file")
+const multerMiddleware = multer(multerConfig).array("file")
 const authMiddleware = require('./middlewares/auth');
 routes.use('/user', authMiddleware);
 
@@ -28,7 +28,7 @@ routes.delete('/user/event/:id',  EventController.delete);
 routes.put('/user/event/:id',  EventController.update);
 
 routes.get('/user/product', UserController.getProducts);
-routes.post('/user/product', multerMiddleware, ProductController.create);
+routes.post('/user/product', ProductController.create);
 routes.delete('/user/product/:id', ProductController.delete);
 routes.put('/user/product/:id', ProductController.update);
 routes.get('/user/categories', ProductController.getCategories);
@@ -37,8 +37,8 @@ routes.get('/user/order', OrderController.listAll);
 routes.delete('/user/order/:id', OrderController.delete);
 routes.post('/order', OrderController.create);
 
-routes.post('/user/image', multerMiddleware, ImageController.uploadImage);
-routes.delete('/user/image/:id', ImageController.delete);
+routes.post('/user/image', multerMiddleware, ImageController.uploadImages);
+routes.delete('/user/image', ImageController.delete);
 
 routes.get('/user', UserController.getUser);
 routes.post('/register', authController.register);
