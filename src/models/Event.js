@@ -47,7 +47,7 @@ const EventSchema = new mongoose.Schema({
   },
   createdBy:{
     type: mongoose.Schema.Types.ObjectId,
-    required:false,
+    required:true,
     ref: 'User'
   }
 });

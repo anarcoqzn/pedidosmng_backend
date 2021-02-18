@@ -23,14 +23,12 @@ routes.get('/categories', ProductController.getCategories);
 
 // CONSERTAR ESTAS ROTAS
 routes.get('/user/event',  UserController.getEvents);
-routes.get('/user/event/:id',  EventController.getById);
 routes.post("/user/event",  EventController.create);
 routes.delete('/user/event/:id',  EventController.delete);
 routes.put('/user/event/:id',  EventController.update);
 
 routes.get('/user/product', UserController.getProducts);
-routes.get('/user/product/:id', ProductController.getById);
-routes.post('/user/product', ProductController.create);
+routes.post('/user/product', multerMiddleware, ProductController.create);
 routes.delete('/user/product/:id', ProductController.delete);
 routes.put('/user/product/:id', ProductController.update);
 routes.get('/user/categories', ProductController.getCategories);
@@ -39,7 +37,6 @@ routes.get('/user/order', OrderController.listAll);
 routes.delete('/user/order/:id', OrderController.delete);
 routes.post('/order', OrderController.create);
 
-routes.get('/image/:id', ImageController.getById);
 routes.post('/user/image', multerMiddleware, ImageController.uploadImage);
 routes.delete('/user/image/:id', ImageController.delete);
 

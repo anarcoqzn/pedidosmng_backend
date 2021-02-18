@@ -6,27 +6,19 @@ module.exports = {
   
   async create(req,res){
     
-    const {
+    const product = {
       title, 
       description, 
       manager, 
       local, 
       startDate, 
       endDate, 
-      ordering_limit_date
-    } = req.body;
-    
-    const products = req.body.products;
-    const event = await Event.create({
-      title,
-      description,
-      local,
-      startDate,
-      endDate,
       ordering_limit_date,
       products,
-      manager
-    });
+      createdBy
+    } = req.body;
+    
+    const event = await Event.create({product});
 
     return res.json(event);
   },

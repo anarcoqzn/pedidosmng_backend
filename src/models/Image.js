@@ -26,7 +26,7 @@ const ImageSchema = new mongoose.Schema({
   },
   reference: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: mongoose.Model,
+    ref: '/^Product$|^User$/',
     required: true
   }
 });

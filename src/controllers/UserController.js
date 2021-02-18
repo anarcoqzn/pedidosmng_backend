@@ -22,10 +22,10 @@ module.exports = {
   },
 
   async getEvents(req,res){
-    return res.send(await Event.find({createdBy: req.userId}));
+    return res.send(await Event.find({createdBy: req.userId}).populate({path:'products',populate:{path:'images'}}));
   },
 
   async getProducts(req,res){
-    return res.send(await Product.find({createdBy: req.userId}));
+    return res.send(await Product.find({createdBy: req.userId}).populate('images'));
   }
 };
